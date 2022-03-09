@@ -29,7 +29,7 @@ exports.getLocators = async (req, res, next) => {
   try {
     const data = await locatorsUserSchema
       .find({
-        $and: [
+        $or: [
           { LocatorCities: { $regex: city } },
           { LocatorCountries: { $regex: country } },
           { Title: { $regex: service } },
