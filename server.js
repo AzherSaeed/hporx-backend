@@ -19,9 +19,9 @@ app.options('*' , cors())
 
 app.use('/api' , allRoutes);
 
-const PORT = 3001; 
+const port =  process.env.PORT ||  8080;
 
 app.get('/', (req, res) => res.send('Hello World'))
 
 
-app.listen(PORT , () => console.log(`Server is running in ${process.env.APP_ENV} mode on port ${PORT}`) )
+app.listen(port , () => console.log(`Server is running in ${process.env.APP_ENV} mode on port ${port}`) )
