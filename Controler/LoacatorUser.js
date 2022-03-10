@@ -26,7 +26,6 @@ exports.getAllLocatorUsers = async (req, res, next) => {
 };
 
 exports.getLocators = async (req, res, next) => {
-  console.log("hit");
   const { city, country, service , limit } = req.body;
   try {
     const data = await locatorsUserSchema
@@ -54,7 +53,7 @@ exports.getCountryCity = async (req, res, next) => {
   try {
     const data = await locatorsUserSchema
       .find()
-      .select(["LocatorCities", "LocatorCountries", "Title"]);
+      .select(["LocatorCities", "LocatorCountries", "Title"]).limit(1000);
     const finalData = {
       city: [],
       country: [],
