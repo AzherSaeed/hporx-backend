@@ -35,7 +35,7 @@ exports.getLocators = async (req, res, next) => {
           { LocatorCountries: { $regex: country } },
           { Title: { $regex: service } },
         ],
-      }).limit(55);
+      }).limit(limit);
     return res.status(200).json({
       success: true,
       all: data.length,
