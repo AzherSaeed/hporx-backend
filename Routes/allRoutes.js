@@ -1,11 +1,13 @@
 const express = require('express');
 const routers = express.Router();
-const {getAllLocatorUsers , getLocators} = require('../Controler/LoacatorUser') 
+const {getAllLocatorUsers , getLocators , getCountryCity} = require('../Controler/LoacatorUser') 
+const {getInTouchQuerySubmittion} = require('../Controler/getInTouchQuery')
 
 
 routers.post('/userData' ,  getAllLocatorUsers)
-
-routers.get("/usersData", getLocators )
+routers.post("/usersData", getLocators )
+routers.post('/getInTouchQuery' ,  getInTouchQuerySubmittion)
+routers.get("/getAddresses", getCountryCity)
 
 
 module.exports = routers

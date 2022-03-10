@@ -1,6 +1,7 @@
-const locatorsUserSchema = require("../Modal/LocatorUser");
+const locatorsUserSchema = require("../Model/LocatorUser");
 const csv = require("csv-parser");
 const fs = require("fs");
+const _ = require("lodash");
 
 exports.getAllLocatorUsers = async (req, res, next) => {
   const results = [];
@@ -24,8 +25,8 @@ exports.getAllLocatorUsers = async (req, res, next) => {
 };
 
 exports.getLocators = async (req, res, next) => {
-  console.log('hit')
-  const {city , country , service } = req.body
+  console.log("hit");
+  const { city, country, service } = req.body;
   try {
     const data = await locatorsUserSchema
       .find({
@@ -34,10 +35,49 @@ exports.getLocators = async (req, res, next) => {
           { LocatorCountries: { $regex: country } },
           { Title: { $regex: service } },
         ],
-      })
-    res.send(data);
+      });
+    return res.status(200).json({
+      success: true,
+      all: data.length,
+      data,
+    });
   } catch (err) {
-    console.log("err", err);
-    res.send(err);
+    res.status(500).json({
+      success: false,
+      error: error,
+    });
+  }
+};
+
+exports.getCountryCity = async (req, res, next) => {
+  try {
+    const data = await locatorsUserSchema
+      .find()
+      .select(["LocatorCities", "LocatorCountries", "Title"]);
+    const finalData = {
+      city: [],
+      country: [],
+      service: [],
+    };
+
+    data.forEach((item) => {
+      item.LocatorCities && finalData.city.push(item.LocatorCities);
+      item.LocatorCountries && finalData.country.push(item.LocatorCountries);
+      item.Title && finalData.service.push(item.Title);
+    });
+
+    finalData.city = _.uniq(finalData.city);
+    finalData.country = _.uniq(finalData.country);
+    finalData.service = _.uniq(finalData.service);
+
+    return res.status(200).json({
+      count: data.length,
+      finalData,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: error,
+    });
   }
 };
