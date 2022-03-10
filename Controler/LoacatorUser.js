@@ -10,6 +10,7 @@ exports.getAllLocatorUsers = async (req, res, next) => {
       .pipe(csv())
       .on("data", (data) => results.push(data))
       .on("end", async () => {
+        console.log(results);
         try {
           locatorsUserSchema
             .insertMany(results)

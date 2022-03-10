@@ -25,6 +25,3 @@ exports.getInTouchQuerySubmittion = async (req, res, next) => {
 
 
 }
-
-
-module
