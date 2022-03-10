@@ -26,7 +26,7 @@ exports.getAllLocatorUsers = async (req, res, next) => {
 
 exports.getLocators = async (req, res, next) => {
   console.log("hit");
-  const { city, country, service } = req.body;
+  const { city, country, service , limit } = req.body;
   try {
     const data = await locatorsUserSchema
       .find({
@@ -35,7 +35,7 @@ exports.getLocators = async (req, res, next) => {
           { LocatorCountries: { $regex: country } },
           { Title: { $regex: service } },
         ],
-      });
+      }).limit(55);
     return res.status(200).json({
       success: true,
       all: data.length,
@@ -44,7 +44,7 @@ exports.getLocators = async (req, res, next) => {
   } catch (err) {
     res.status(500).json({
       success: false,
-      error: error,
+      error: err,
     });
   }
 };

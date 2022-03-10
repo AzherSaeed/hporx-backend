@@ -10,4 +10,17 @@ routers.post('/getInTouchQuery' ,  getInTouchQuerySubmittion)
 routers.get("/getAddresses", getCountryCity)
 
 
-module.exports = routers
+module.exports = routers;
+
+
+
+// const getShipmentFetchEstimate = async (obj) => {
+//     const promise = [];
+//     obj.forEach(item => {
+//       promise.push(
+//         getestimate(addrsz)
+//       )
+//     });
+//     const res = await Promise.all(promise);
+//     return res;
+//   }
