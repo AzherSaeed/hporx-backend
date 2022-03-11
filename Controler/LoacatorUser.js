@@ -26,16 +26,52 @@ exports.getAllLocatorUsers = async (req, res, next) => {
 };
 
 exports.getLocators = async (req, res, next) => {
-  const { city, country, service , limit } = req.body;
+  const { city, country, service, limit } = req.body;
+
+  const finalData = [];
+
+  if(city){
+    finalData.push( { LocatorCities: { $regex: city } })
+  }
+  if(country){
+    finalData.push( { LocatorCountries: { $regex: country } })
+  }
+  if(service){
+    finalData.push( { LocatorType: { $regex: service } })
+  }
+
+
+  // console.log(finalData , 'finalData')
+  
+
   try {
+
     const data = await locatorsUserSchema
       .find({
-        $or: [
-          { LocatorCities: { $regex: city } },
-          { LocatorCountries: { $regex: country } },
-          { Title: { $regex: service } },
-        ],
-      }).limit(limit);
+        $and: finalData,
+      })
+      .limit(limit);
+
+    // const data = await locatorsUserSchema.find({})
+
+    // if(city == '' || country == '' || service == ''){
+    //   console.log('nothing selected')
+    // }
+    // else if(city !== '' || country == '' || service == ''  ){
+
+    // }
+    // else if(city == '' || country !== '' || service == '' ){
+
+    // }
+    // else if(city == '' || country == '' || service !== '' ){
+      
+    // }
+
+    // const getCities = data.filter((item) => item.LocatorCities == city)
+    // const getServiece = data.filter((item) => item.LocatorType == service)
+    // const getCountry = data.filter((item) => item.LocatorCountries == country)
+
+
     return res.status(200).json({
       success: true,
       all: data.length,
@@ -53,7 +89,7 @@ exports.getCountryCity = async (req, res, next) => {
   try {
     const data = await locatorsUserSchema
       .find()
-      .select(["LocatorCities", "LocatorCountries", "Title"]).limit(1000);
+      .select(["LocatorCities", "LocatorCountries", "LocatorType"]);
     const finalData = {
       city: [],
       country: [],
@@ -63,7 +99,7 @@ exports.getCountryCity = async (req, res, next) => {
     data.forEach((item) => {
       item.LocatorCities && finalData.city.push(item.LocatorCities);
       item.LocatorCountries && finalData.country.push(item.LocatorCountries);
-      item.Title && finalData.service.push(item.Title);
+      item.LocatorType && finalData.service.push(item.LocatorType);
     });
 
     finalData.city = _.uniq(finalData.city);

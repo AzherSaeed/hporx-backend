@@ -5,7 +5,12 @@ const {getInTouchQuerySubmittion} = require('../Controler/getInTouchQuery')
 const {subcriptionQuerySubmittion} = require('../Controler/Subcription')
 
 
-routers.post('/userData' ,  getAllLocatorUsers)
+// routers.post('/userData' ,  getAllLocatorUsers)
+
+
+
+
+
 routers.post("/usersData", getLocators )
 routers.post('/getInTouchQuery' ,  getInTouchQuerySubmittion)
 routers.get("/getAddresses", getCountryCity)
