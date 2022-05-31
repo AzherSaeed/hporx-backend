@@ -18,6 +18,7 @@ app.options('*' , cors())
 
 
 app.use('/api' , allRoutes);
+app.use('/uploads' , express.static('uploads') )
 
 const port =  process.env.PORT ||  8080;
 

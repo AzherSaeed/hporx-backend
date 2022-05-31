@@ -28,29 +28,28 @@ exports.getAllLocatorUsers = async (req, res, next) => {
 exports.getLocators = async (req, res, next) => {
   const { city, country, service, limit } = req.body;
 
+
+  // User.find({city:"abc", country:"abc",name:"ab"})
+
   const finalData = [];
 
-  if(city){
-    finalData.push( { LocatorCities: { $regex: city } })
+  if (city) {
+    finalData.push({ LocatorCities: { $regex: city } });
   }
-  if(country){
-    finalData.push( { LocatorCountries: { $regex: country } })
+  if (country) {
+    finalData.push({ LocatorCountries: { $regex: country } });
   }
-  if(service){
-    finalData.push( { LocatorType: { $regex: service } })
+  if (service) {
+    finalData.push({ LocatorType: { $regex: service } });
   }
-
 
   // console.log(finalData , 'finalData')
-  
 
   try {
-
     const data = await locatorsUserSchema
-      .find({
-        $and: finalData,
-      })
+      .find({LocatorCities : city , LocatorCountries : country ,  LocatorType : service})
       .limit(limit);
+      
 
     // const data = await locatorsUserSchema.find({})
 
@@ -64,13 +63,12 @@ exports.getLocators = async (req, res, next) => {
 
     // }
     // else if(city == '' || country == '' || service !== '' ){
-      
+
     // }
 
     // const getCities = data.filter((item) => item.LocatorCities == city)
     // const getServiece = data.filter((item) => item.LocatorType == service)
     // const getCountry = data.filter((item) => item.LocatorCountries == country)
-
 
     return res.status(200).json({
       success: true,
