@@ -14,7 +14,12 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5,
+  },
+});
 
 const {
   getAllLocatorUsers,
@@ -24,7 +29,7 @@ const {
 const { getInTouchQuerySubmittion } = require("../Controler/getInTouchQuery");
 const { subcriptionQuerySubmittion } = require("../Controler/Subcription");
 const productSchema = require("../Model/addProduct");
-const {getAllProducts} = require('../Controler/products')
+const { getAllProducts } = require("../Controler/products");
 
 // routers.post('/userData' ,  getAllLocatorUsers)
 
@@ -32,9 +37,7 @@ routers.post("/usersData", getLocators);
 routers.post("/getInTouchQuery", getInTouchQuerySubmittion);
 routers.get("/getAddresses", getCountryCity);
 routers.post("/subcription", subcriptionQuerySubmittion);
-routers.get("/getAllProducts" , getAllProducts);
-
-
+routers.get("/getAllProducts", getAllProducts);
 
 routers.post("/addProduct", upload.single("productImage"), (req, res) => {
   try {
@@ -43,13 +46,13 @@ routers.post("/addProduct", upload.single("productImage"), (req, res) => {
       description: req.body.description,
       price: req.body.price,
       productImage: req.file.filename,
-      productType : req.body.productType
+      productType: req.body.productType,
     });
 
     const savedProduct = product.save();
 
     return res.status(200).json({
-      product : savedProduct,
+      product: savedProduct,
       success: true,
       message: "your request has been submitted",
     });
