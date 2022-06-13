@@ -28,28 +28,52 @@ exports.getAllLocatorUsers = async (req, res, next) => {
 exports.getLocators = async (req, res, next) => {
   const { city, country, service, limit } = req.body;
 
-
   // User.find({city:"abc", country:"abc",name:"ab"})
 
-  const finalData = [];
-
-  if (city) {
-    finalData.push({ LocatorCities: { $regex: city } });
-  }
-  if (country) {
-    finalData.push({ LocatorCountries: { $regex: country } });
-  }
-  if (service) {
-    finalData.push({ LocatorType: { $regex: service } });
-  }
+  // if (city) {
+  //   finalData.push({ LocatorCities: { $regex: city } });
+  // }
+  // if (country) {
+  //   finalData.push({ LocatorCountries: { $regex: country } });
+  // }
+  // if (service) {
+  //   finalData.push({ LocatorType: { $regex: service } });
+  // }
 
   // console.log(finalData , 'finalData')
 
   try {
-    const data = await locatorsUserSchema
-      .find({LocatorCities : city , LocatorCountries : country ,  LocatorType : service})
-      .limit(limit);
-      
+    // const data = await locatorsUserSchema
+    //   .find({LocatorCities : city , LocatorCountries : country ,  LocatorType : service})
+    //   .limit(limit);
+
+    const apiResponse = await locatorsUserSchema.find({}).limit(limit);
+
+    // console.log(data , 'datadatadata');
+
+    const data = [];
+
+    if (city) {
+      // finalData.push({ LocatorCities: { $regex: city } });
+      const getCityData = apiResponse.filter(
+        (data) => data.LocatorCities == city
+      );
+      data.push(...getCityData);
+    }
+    if (country) {
+      // finalData.push({ LocatorCountries: { $regex: country } });
+      const getCountriesData = apiResponse.filter(
+        (data) => data.LocatorCountries == country
+      );
+      data.push(...getCountriesData);
+    }
+    if (service) {
+      // finalData.push({ LocatorType: { $regex: service } });
+      const getServiesData = apiResponse.filter(
+        (data) => data.LocatorType == service
+      );
+      data.push(...getServiesData);
+    }
 
     // const data = await locatorsUserSchema.find({})
 
