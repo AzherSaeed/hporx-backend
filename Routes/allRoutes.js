@@ -31,7 +31,7 @@ const { subcriptionQuerySubmittion } = require("../Controler/Subcription");
 const productSchema = require("../Model/addProduct");
 const { getAllProducts } = require("../Controler/products");
 
-// routers.post('/userData' ,  getAllLocatorUsers)
+routers.post('/userData' ,  getAllLocatorUsers)
 
 routers.post("/usersData", getLocators);
 routers.post("/getInTouchQuery", getInTouchQuerySubmittion);

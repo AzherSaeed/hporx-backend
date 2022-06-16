@@ -49,30 +49,46 @@ exports.getLocators = async (req, res, next) => {
 
     const apiResponse = await locatorsUserSchema.find({}).limit(limit);
 
-    // console.log(data , 'datadatadata');
 
     const data = [];
 
+
+    if(!city && !country && !service){
+      const imagesUser = apiResponse.filter((user) => user.ImageURL)
+      const withImagesUser = apiResponse.filter((user) => user.ImageURL == '')
+      data.unshift(...imagesUser);
+      data.push(...withImagesUser);
+    }
+
     if (city) {
-      // finalData.push({ LocatorCities: { $regex: city } });
-      const getCityData = apiResponse.filter(
-        (data) => data.LocatorCities == city
-      );
-      data.push(...getCityData);
+      // const getCityData = apiResponse.filter(
+      //   (data) => data.LocatorCities == city
+      // );
+      // data.push(...getCityData);
+      const imagesUser = apiResponse.filter((user) => user.LocatorCities == city && user.ImageURL)
+      const withoutImagesUsers = apiResponse.filter((user) => user.LocatorCities == city && user.ImageURL == '')
+      data.unshift(...imagesUser);
+      data.push(...withoutImagesUsers)
     }
     if (country) {
-      // finalData.push({ LocatorCountries: { $regex: country } });
-      const getCountriesData = apiResponse.filter(
-        (data) => data.LocatorCountries == country
-      );
-      data.push(...getCountriesData);
+      // const getCountriesData = apiResponse.filter(
+      //   (data) => data.LocatorCountries == country
+      // );
+      // data.push(...getCountriesData);
+      const imagesUser = apiResponse.filter((user) => user.LocatorCountries == country && user.ImageURL)
+      const withoutImagesUsers = apiResponse.filter((user) => user.LocatorCountries == country && user.ImageURL == '')
+      data.unshift(...imagesUser);
+      data.push(...withoutImagesUsers)
     }
     if (service) {
-      // finalData.push({ LocatorType: { $regex: service } });
-      const getServiesData = apiResponse.filter(
-        (data) => data.LocatorType == service
-      );
-      data.push(...getServiesData);
+      // const getServiesData = apiResponse.filter(
+      //   (data) => data.LocatorType == service
+      // );
+      // data.push(...getServiesData);
+      const imagesUser = apiResponse.filter((user) => user.LocatorType == service && user.ImageURL)
+      const withoutImagesUsers = apiResponse.filter((user) => user.LocatorType == service && user.ImageURL == '')
+      data.unshift(...imagesUser);
+      data.push(...withoutImagesUsers)
     }
 
     // const data = await locatorsUserSchema.find({})

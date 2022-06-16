@@ -14,6 +14,10 @@ const locatorsUserSchema = mongoose.Schema({
         type : String,
         required : false
     },
+    ImageURL : {
+        type : String,
+        required : false
+    },
     LocatorType : {
         type : String,
         required : false
