@@ -8,6 +8,13 @@
   },
   "keywords": [],
   "author": "",
+  "repository": {
+    "type": "git",
+    "url" : "https://github.com/AzherSaeed/hporx-backend.git"
+  },
+  "engines": { 
+    "node" : ">=8.0.0"
+  },
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
