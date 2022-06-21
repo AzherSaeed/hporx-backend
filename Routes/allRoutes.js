@@ -30,6 +30,7 @@ const { getInTouchQuerySubmittion } = require("../Controler/getInTouchQuery");
 const { subcriptionQuerySubmittion } = require("../Controler/Subcription");
 const productSchema = require("../Model/addProduct");
 const { getAllProducts } = require("../Controler/products");
+const {authQuery} = require('../Controler/login')
 
 routers.post('/userData' ,  getAllLocatorUsers)
 
@@ -38,6 +39,7 @@ routers.post("/getInTouchQuery", getInTouchQuerySubmittion);
 routers.get("/getAddresses", getCountryCity);
 routers.post("/subcription", subcriptionQuerySubmittion);
 routers.get("/getAllProducts", getAllProducts);
+routers.post('/login' , authQuery)
 routers.post("/addProduct", upload.single("productImage"), (req, res) => {
   try {
     const product = new productSchema({
